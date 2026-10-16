@@ -40,7 +40,7 @@ Menggunakan `Dockerfile.single` berbasis `golang:1.22-bookworm`, aplikasi berhas
 Melalui teknik *Multi-Stage Build*, ukuran image berhasil dipangkas secara drastis dari ~840 MB menjadi hanya **26.1 MB** (berhasil memenuhi syarat $< 100\text{ MB}$). Stage 1 (`builder`) bertugas mengompilasi kode menggunakan Go SDK, sementara Stage 2 (`production`) hanya menyalin file biner akhir ke dalam base image minimalis `alpine:3.20` menggunakan `COPY --from=builder`. Keamanan juga ditingkatkan dengan menjalankan aplikasi sebagai non-root user (`appuser` dengan UID `10001`).
 
 ### D. Tahap 4 (Lab 2 RPS): Orkestrasi Multi-Tier & Persistensi Data dengan Docker Compose
-![Bukti Screenshot 4](docs/screenshots/sc04-tahap4-compose-persistensi.png)
+![Bukti Screenshot 4](docs/screenshots/sc04-tahap4-compose.png)
 
 ***Penjelasan Analisis Tahap 4**:
 Layanan diorkestrasikan menggunakan Docker Compose yang menggabungkan Frontend (Nginx), Backend (Go API), dan Database (PostgreSQL). Komunikasi berjalan aman melalui custom bridge network. Ketika dilakukan perintah `docker compose down` lalu `docker compose up -d`, Container ID berubah menjadi baru, namun data layanan ber-NIM Anda tetap aman dan tidak hilang karena tersimpan secara persisten di dalam Named Volume (`pgdata`).
