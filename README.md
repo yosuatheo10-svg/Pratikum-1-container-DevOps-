@@ -28,5 +28,11 @@ Pada tahap ini dilakukan optimasi Dockerfile menggunakan teknik Multi-Stage Buil
 ### Tahap 4: Orkestrasi Multi-Tier dengan Docker Compose
 ![Tahap 4 Compose](docs/screenshots/sc04-tahap4-compose.png)
 
+Penjelasan Analisis Tahap 4:
+Pada tahap ini, pengujian orkestrasi multi-container berhasil dijalankan menggunakan Docker Compose. Seluruh layanan yaitu `go-backend`, `postgres-db`, dan `nginx-proxy` berjalan stabil (Up) pada port masing-masing dan saling terhubung dalam satu jaringan virtual Docker.
+
 ### Tahap 5: Pengujian Reverse Proxy Nginx
 ![Tahap 5 Proxy](docs/screenshots/sc05-tahap5-proxy.png)
+
+Penjelasan Analisis Tahap 5:
+Pengujian reverse proxy Nginx dilakukan dengan mengeksekusi perintah `curl -i http://localhost/`. Respons `HTTP/1.1 200 OK` dari server Nginx menandakan bahwa reverse proxy berfungsi dengan baik dalam meneruskan lalu lintas permintaan ke layanan backend.

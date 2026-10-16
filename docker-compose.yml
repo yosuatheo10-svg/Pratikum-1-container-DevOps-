@@ -1,0 +1,41 @@
+version: '3.8'
+
+services:
+  db:
+    image: postgres:15-alpine
+    container_name: postgres-db
+    environment:
+      POSTGRES_USER: user_yosua
+      POSTGRES_PASSWORD: password_yosua
+      POSTGRES_DB: db_yosua
+    ports:
+      - "5432:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: go-backend
+    ports:
+      - "8080:8080"
+    environment:
+      DB_HOST: db
+      DB_USER: user_yosua
+      DB_PASSWORD: password_yosua
+      DB_NAME: db_yosua
+      DB_PORT: 5432
+    depends_on:
+      - db
+
+  nginx:
+    image: nginx:alpine
+    container_name: nginx-proxy
+    ports:
+      - "80:80"
+    depends_on:
+      - backend
+
+volumes:
+  pgdata:
